@@ -12,4 +12,9 @@ class PlanterBox extends Model
     {
         return $this->belongsTo(Plant::class);
     }
+
+    public function varieties()
+    {
+        return $this->belongsToMany(Variety::class, 'planter_box_varieties');
+    }
 }

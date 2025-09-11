@@ -22,5 +22,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(PlantSeeder::class);
         $this->call(PlanterBoxSeeder::class);
+        $this->call(PotSeeder::class);
+        $this->call(NoteSeeder::class);
     }
 }
