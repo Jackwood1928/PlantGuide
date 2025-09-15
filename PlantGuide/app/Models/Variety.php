@@ -13,9 +13,9 @@ class Variety extends Model
         return $this->belongsTo(Plant::class);
     }
 
-    public function planterBoxes()
+    public function containerObjects()
     {
-        return $this->belongsToMany(PlanterBox::class, 'planter_box_varieties');
+        return $this->belongsToMany(ContainerObject::class, 'container_object_varieties');
     }
 
     public function notes()

@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client';
 import axios from 'axios';
 
 function App() {
+    const [selectedContainer, setSelectedContainer] = React.useState(null);
+    const [showModal, setShowModal] = React.useState(false);
     // Track window width for responsive rendering
     const [isMobile, setIsMobile] = React.useState(window.innerWidth <= 600);
     React.useEffect(() => {
@@ -13,27 +15,40 @@ function App() {
     const rows = 3;
     const cols = 6;
     const boxSize = 100; // px, for visual demo
-    const activeBoxes = [3, 4, 5]; // 0-based indices for Box 4, 5, 6
+    const [activeBoxes, setActiveBoxes] = React.useState([]);
     const [boxes, setBoxes] = React.useState([]);
     const [pots, setPots] = React.useState([]);
+    const [strawberryBoxes, setStrawberryBoxes] = React.useState([]);
     const [loading, setLoading] = React.useState(true);
     const [bottomText, setBottomText] = React.useState("");
     const [plants, setPlants] = React.useState([]);
 
     React.useEffect(() => {
-        axios.get('/api/planter-boxes').then(res => {
-            setBoxes(res.data);
+        axios.get('/api/containers').then(res => {
+            const containers = res.data;
+            const planterBoxes = containers.filter(c => c.type === 'planter_box');
+            setBoxes(planterBoxes);
+            setPots(containers.filter(c => c.type === 'pot'));
+            setStrawberryBoxes(containers.filter(c => c.type === 'strawberry_box'));
+            setActiveBoxes(planterBoxes.filter(box => box.status === 'Built'));
             setLoading(false);
         });
         axios.get('/api/plants').then(res => {
             setPlants(res.data);
         });
-        axios.get('/api/pots').then(res => {
-            setPots(res.data);
-        });
     }, []);
 
     if (loading) return <div>Loading...</div>;
+
+    const handleContainerClick = (container) => {
+        setSelectedContainer(container);
+        setShowModal(true);
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+        setSelectedContainer(null);
+    };
 
     return (
     <React.Fragment>
@@ -332,9 +347,9 @@ function App() {
                                     width: '100%',
                                     marginTop: '32px',
                                 }}>
-                                    {Array.from({ length: 12 }).map((_, i) => (
+                                    {strawberryBoxes.map((box, i) => (
                                         <div
-                                            key={i}
+                                            key={box.id || i}
                                             style={{
                                                 width: '80%',
                                                 height: `calc(100% / 12 - 4px)`,
@@ -349,10 +364,12 @@ function App() {
                                                 fontWeight: 'bold',
                                                 fontSize: '0.95rem',
                                                 color: '#d32f2f',
-                                                marginBottom: i < 11 ? '2px' : '0',
+                                                marginBottom: i < strawberryBoxes.length - 1 ? '2px' : '0',
+                                                cursor: 'pointer',
                                             }}
+                                            onClick={() => handleContainerClick(box)}
                                         >
-                                            {`Box ${i + 1}`}
+                                            {box.name}
                                         </div>
                                     ))}
                                 </div>
@@ -361,7 +378,7 @@ function App() {
                     )}
                     {/* Planter Boxes */}
                     {boxes.map((box, i) => {
-                        const isActive = activeBoxes.includes(i);
+                        const isActive = activeBoxes.some(active => active.id === box.id);
                         const isUnbuilt = box.status === 'unbuilt';
                         return (
                             <div
@@ -385,9 +402,11 @@ function App() {
                                     opacity: isUnbuilt ? 0.6 : 1,
                                     overflow: 'visible',
                                     wordBreak: 'break-word',
+                                    cursor: 'pointer',
                                 }}
+                                onClick={() => handleContainerClick(box)}
                             >
-                                {isUnbuilt ? 'Unbuilt' : `Box ${i + 1}`}
+                                {isUnbuilt ? 'Unbuilt' : box.name}
                                 <div style={{
                                     marginTop: '8px',
                                     width: '80%',
@@ -434,9 +453,11 @@ function App() {
                             fontSize: '1rem',
                             color: '#fff',
                             position: 'relative',
+                            cursor: 'pointer',
                         }}
+                        onClick={() => handleContainerClick(pot)}
                     >
-                        {`Pot ${i + 1}`}
+                        {pot.name || `Pot ${i + 1}`}
                         <div style={{ marginTop: '4px', width: '80%', padding: '2px', fontSize: 'clamp(0.7rem, 1vw + 0.7rem, 1rem)', textAlign: 'center', wordBreak: 'normal', overflowWrap: 'normal', whiteSpace: 'normal', lineHeight: '1.1' }}>
                             {pot.plant ? pot.plant.name : <span style={{ color: '#aaa' }}>Empty</span>}
                         </div>
@@ -549,6 +570,107 @@ function App() {
                     }}>Red Dragon Seeds</a>
                 </div>
             </div>
+        {showModal && selectedContainer && (
+            <div style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                width: '100vw',
+                height: '100vh',
+                background: 'rgba(0,0,0,0.4)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: 9999,
+            }}
+                onClick={closeModal}
+            >
+                <div style={{
+                    background: '#fff',
+                    borderRadius: '12px',
+                    padding: '32px',
+                    minWidth: '320px',
+                    maxWidth: '90vw',
+                    boxShadow: '0 2px 16px rgba(0,0,0,0.15)',
+                    position: 'relative',
+                }}
+                    onClick={e => e.stopPropagation()}
+                >
+                    <button style={{ position: 'absolute', top: 12, right: 12, fontSize: '1.2rem', background: 'none', border: 'none', cursor: 'pointer' }} onClick={closeModal}>&times;</button>
+                    <h2 style={{ marginBottom: '12px' }}>{selectedContainer.name}</h2>
+                    <div><strong>Type:</strong> {selectedContainer.type}</div>
+                    <div><strong>Location:</strong> {selectedContainer.location}</div>
+                    {selectedContainer.status && <div><strong>Status:</strong> {selectedContainer.status}</div>}
+                    {selectedContainer.plant && <div><strong>Plant:</strong> {selectedContainer.plant.name}</div>}
+                    {selectedContainer.varieties && selectedContainer.varieties.length > 0 && (
+                        <div style={{ marginTop: '12px' }}>
+                            <strong>Varieties:</strong>
+                            <ul>
+                                {selectedContainer.varieties.map(v => (
+                                    <li key={v.id}>{v.name}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
+                    {/* Notes split into plant and variety sections */}
+                    {/* Plant notes section - fallback to global plants array if notes missing */}
+                    {(() => {
+                        if (!selectedContainer.plant) return null;
+                        let plantNotes = Array.isArray(selectedContainer.plant.notes) ? selectedContainer.plant.notes : [];
+                        // Fallback: find plant in global plants array if notes missing or empty
+                        if (plantNotes.length === 0) {
+                            const found = plants.find(p => p.id === selectedContainer.plant.id);
+                            if (found && Array.isArray(found.notes) && found.notes.length > 0) {
+                                plantNotes = found.notes;
+                            }
+                        }
+                        // Only show notes that do NOT have a variety_id
+                        const filteredNotes = plantNotes.filter(noteObj => !noteObj.variety_id);
+                        if (filteredNotes.length > 0) {
+                            return (
+                                <div style={{ marginTop: '18px', maxHeight: '220px', overflowY: 'auto' }}>
+                                    <strong>Plant Notes:</strong>
+                                    <ul>
+                                        {filteredNotes.map(noteObj => (
+                                            <li key={noteObj.id} style={{ fontStyle: 'italic', color: '#555' }}>
+                                                {noteObj.url ? (
+                                                    <a href={noteObj.url} target="_blank" rel="noopener noreferrer" style={{ color: '#1976d2', textDecoration: 'underline' }}>{noteObj.note}</a>
+                                                ) : (
+                                                    noteObj.note
+                                                )}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            );
+                        }
+                        return null;
+                    })()}
+                    {/* Variety notes section, one section per variety */}
+                    {selectedContainer.varieties && selectedContainer.varieties.length > 0 && (
+                        <div style={{ marginTop: '18px', maxHeight: '220px', overflowY: 'auto' }}>
+                            <strong>Variety Notes:</strong>
+                            {selectedContainer.varieties.filter(v => v.notes && v.notes.length > 0).map(v => (
+                                <div key={v.id} style={{ marginBottom: '10px' }}>
+                                    <span style={{ fontWeight: 'bold', color: '#1976d2' }}>{v.name}:</span>
+                                    <ul style={{ marginLeft: '16px' }}>
+                                        {v.notes.map(noteObj => (
+                                            <li key={noteObj.id} style={{ fontStyle: 'italic', color: '#555' }}>
+                                                {noteObj.url ? (
+                                                    <a href={noteObj.url} target="_blank" rel="noopener noreferrer" style={{ color: '#1976d2', textDecoration: 'underline' }}>{noteObj.note}</a>
+                                                ) : (
+                                                    noteObj.note
+                                                )}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            </div>
+        )}
     </React.Fragment>
     );
 }

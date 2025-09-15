@@ -2,16 +2,17 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Pot;
+use App\Models\ContainerObject;
 
 class PotSeeder extends Seeder
 {
     public function run()
     {
         for ($i = 1; $i <= 10; $i++) {
-            Pot::create([
+            ContainerObject::create([
+                'type' => 'pot',
                 'name' => 'Pot ' . $i,
-                'status' => 'empty',
+                'location' => 'unknown',
             ]);
         }
     }

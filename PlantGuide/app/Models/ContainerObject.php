@@ -4,9 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PlanterBox extends Model
+
+class ContainerObject extends Model
 {
-    protected $fillable = ['position', 'plant_id'];
+    protected $fillable = ['type', 'name', 'location', 'plant_id'];
 
     public function plant()
     {
@@ -15,6 +16,6 @@ class PlanterBox extends Model
 
     public function varieties()
     {
-        return $this->belongsToMany(Variety::class, 'planter_box_varieties');
+        return $this->belongsToMany(Variety::class, 'container_object_varieties');
     }
 }

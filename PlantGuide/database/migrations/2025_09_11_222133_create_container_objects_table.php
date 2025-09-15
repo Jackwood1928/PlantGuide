@@ -11,8 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('planter_boxes', function (Blueprint $table) {
-            $table->foreign('plant_id')->references('id')->on('plants')->onDelete('set null');
+        Schema::create('container_objects', function (Blueprint $table) {
+            $table->id();
+            $table->string('type');
+            $table->string('name');
+            $table->string('status')->default('unbuilt');
+            $table->string('location');
+            $table->timestamps();
         });
     }
 
@@ -21,8 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('planter_boxes', function (Blueprint $table) {
-            $table->dropForeign(['plant_id']);
-        });
+        Schema::dropIfExists('container_objects');
     }
 };

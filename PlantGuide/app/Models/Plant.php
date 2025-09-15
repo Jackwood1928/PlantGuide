@@ -8,14 +8,9 @@ class Plant extends Model
 {
     protected $fillable = ['name'];
 
-    public function planterBoxes()
+    public function containerObjects()
     {
-        return $this->hasMany(PlanterBox::class);
-    }
-
-    public function pots()
-    {
-        return $this->hasMany(Pot::class);
+        return $this->hasMany(ContainerObject::class);
     }
 
     public function varieties()

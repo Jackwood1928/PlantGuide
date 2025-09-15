@@ -3,9 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\PlanterBox;
+use App\Models\ContainerObject;
 use App\Models\Plant;
-use App\Models\PlanterBoxVariety;
+use App\Models\ContainerObjectVariety;
 
 class PlanterBoxSeeder extends Seeder
 {
@@ -16,68 +16,112 @@ class PlanterBoxSeeder extends Seeder
         $onion = Plant::findOrFail(5);
         $garlic = Plant::findOrFail(4);
 
-        // Create the planter boxes 6 by 3, so 18 boxes in total
+        // Create the planter boxes using ContainerObject
         for ($i = 0; $i < 18; $i++) {
-            PlanterBox::create([
-                'position' => $i,
-                'plant_id' => ($i === 3 ? $spinach->id : ($i === 4 ? $onion->id : ($i === 5 ? $garlic->id : null))), //hard coding the boxes that are done
-                'status' => ($i === 3 || $i === 4 || $i === 5 ? 'built' : 'unbuilt'),
+            if ($i == 3) {
+                // Assign spinach to box 4
+                ContainerObject::create([
+                    'type' => 'planter_box',
+                    'name' => 'Box ' . ($i + 1),
+                    'location' => 'garden',
+                    'status' => 'Built',
+                    'plant_id' => $spinach->id,
+                ]);
+                continue;
+            } elseif ($i == 4) {
+                // Assign onion to box 6
+                ContainerObject::create([
+                    'type' => 'planter_box',
+                    'name' => 'Box ' . ($i + 1),
+                    'location' => 'garden',
+                    'status' => 'Built',
+                    'plant_id' => $onion->id,
+                ]);
+                continue;
+            } elseif ($i == 5) {
+                // Assign garlic to box 5
+                ContainerObject::create([
+                    'type' => 'planter_box',
+                    'name' => 'Box ' . ($i + 1),
+                    'location' => 'garden',
+                    'status' => 'Built',
+                    'plant_id' => $garlic->id,
+                ]);
+                continue;
+            }
+            ContainerObject::create([
+                'type' => 'planter_box',
+                'name' => 'Box ' . ($i + 1),
+                'location' => 'garden',
             ]);
         }
 
-        PlanterBoxVariety::create([
-                'planter_box_id' => 4,
+        // Example: Add strawberry boxes
+        for ($i = 0; $i < 12; $i++) {
+            ContainerObject::create([
+                'type' => 'strawberry_box',
+                'name' => 'Strawberry Box ' . ($i + 1),
+                'location' => 'patch',
+            ]);
+        }
+
+        ContainerObjectVariety::create([
+                'container_object_id' => 4,
                 'variety_id' => 13
         ]);
 
-         PlanterBoxVariety::create([
-                'planter_box_id' => 6,
+         ContainerObjectVariety::create([
+                'container_object_id' => 6,
                 'variety_id' =>  16,
         ]);
 
-        PlanterBoxVariety::create([
-                'planter_box_id' => 6,
+        ContainerObjectVariety::create([
+                'container_object_id' => 6,
                 'variety_id' =>  17,
         ]);
 
-        PlanterBoxVariety::create([
-                'planter_box_id' => 6,
+        ContainerObjectVariety::create([
+                'container_object_id' => 6,
                 'variety_id' =>  18,
         ]);
 
-        PlanterBoxVariety::create([
-                'planter_box_id' => 6,
+        ContainerObjectVariety::create([
+                'container_object_id' => 6,
                 'variety_id' =>  19,
         ]);
 
-        PlanterBoxVariety::create([
-                'planter_box_id' => 6,
+        ContainerObjectVariety::create([
+                'container_object_id' => 6,
                 'variety_id' =>  20,    
         ]);
 
-        PlanterBoxVariety::create([
-                'planter_box_id' => 6,
+        ContainerObjectVariety::create([
+                'container_object_id' => 6,
                 'variety_id' =>  21,    
         ]);
 
-        PlanterBoxVariety::create([
-                'planter_box_id' => 6,
+        ContainerObjectVariety::create([
+                'container_object_id' => 6,
                 'variety_id' =>  22,    
         ]);
 
-        PlanterBoxVariety::create([
-                'planter_box_id' => 5,
+        ContainerObjectVariety::create([
+                'container_object_id' => 5,
                 'variety_id' =>  1,
         ]);
 
-        PlanterBoxVariety::create([
-                'planter_box_id' => 5,
+        ContainerObjectVariety::create([
+                'container_object_id' => 5,
                 'variety_id' =>  2,
         ]);
 
-        PlanterBoxVariety::create([
-                'planter_box_id' => 5,
+        ContainerObjectVariety::create([
+                'container_object_id' => 5,
                 'variety_id' =>  3,
         ]);
+        // Example: Assign varieties to container objects (update IDs as needed)
+        // ContainerObject::find(4)->varieties()->attach(13);
+        // ContainerObject::find(6)->varieties()->attach([16,17,18,19,20,21,22]);
+        // ContainerObject::find(5)->varieties()->attach([1,2,3]);
     }
 }
