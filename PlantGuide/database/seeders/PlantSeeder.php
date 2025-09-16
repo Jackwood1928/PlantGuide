@@ -59,6 +59,9 @@ class PlantSeeder extends Seeder
 
         $strawberry->varieties()->createMany([
             ['name' => 'Anablanca (Snow White)(Fragaria x ananassa)', 'url' => 'https://www.thompson-morgan.com/p/strawberry-anablanca-snow-white/KB2112TM'],
+            ['name' => 'Allegro', 'url' => 'https://www.thompson-morgan.com/p/strawberry-british-grown-wimbledon-collection/wkh4010TM'],
+            ['name' => 'Flamenco', 'url' => 'https://www.thompson-morgan.com/p/strawberry-british-grown-wimbledon-collection/wkh4010TM'],
+            ['name' => 'Vibrant', 'url' => 'https://www.thompson-morgan.com/p/strawberry-british-grown-wimbledon-collection/wkh4010TM'],
         ]);
 
         $spinach->varieties()->createMany([
@@ -228,6 +231,38 @@ class PlantSeeder extends Seeder
                 'variety_id' => $onionBrown->id,
             ]);
         }    
-        
+
+        $strawberryAnablanca = $strawberry->varieties()->where('name', 'Anablanca (Snow White)(Fragaria x ananassa)')->first();
+        if ($strawberryAnablanca) {  
+            $strawberryAnablanca->notes()->create([
+                'note' => 'Grow this unusual variety and you’re in for a real treat. Also known as Pineberry, Strawberry ‘Snow White’ provides high yields of fruit with an aromatic flavour which has distinct pineapple aftertaste! The fruit can make quite a talking point with their backwards appearance - the same appetising heart shaped soft fruit but with white flesh and red seeds. A lovely strawberry to enjoy freshly picked as a snack or to add to desserts and cakes. Its bushy habit and neatly spreading stems makes this a good choice for growing in containers where the fruit will cascade over the edges, as well as out on the allotment. A fully hardy perennial, you can enjoy a great summer crop year after year. Height: 40cm (16”). Spread: 50cm (20”).',
+                'plant_id' => $strawberry->id,
+                'variety_id' => $strawberryAnablanca->id,
+            ]);
+        }
+        $strawberryAllegro = $strawberry->varieties()->where('name', 'Allegro')->first();
+        if ($strawberryAllegro) {
+            $strawberryAllegro->notes()->create([
+                'note' => 'Looking for a super vigorous variety that can cope with poorer soils and small spaces where crop rotation is a challenge? This very early season variety exhibits exceptional resistance to endemic soil borne diseases as well as botrytis and mildew. The large, bright red fruits have an excellent flavour and high sugar content.',
+                'plant_id' => $strawberry->id,
+                'variety_id' => $strawberryAllegro->id,
+            ]);
+        }
+        $strawberryFlamenco = $strawberry->varieties()->where('name', 'Flamenco')->first();
+        if ($strawberryFlamenco) {
+            $strawberryFlamenco->notes()->create([
+                'note' => 'If space is limited, try growing this ever-bearing variety to maximise your crop of sweet and juicy fruits over a long picking period. So sweet it needs no sugar, the fruit is ready to harvest from mid-May until November with the peak of the fruit produced in early September.',
+                'plant_id' => $strawberry->id,
+                'variety_id' => $strawberryFlamenco->id,
+            ]);
+        }
+        $strawberryVibrant = $strawberry->varieties()->where('name', 'Vibrant')->first();
+        if ($strawberryVibrant) {   
+            $strawberryVibrant->notes()->create([
+                'note' => 'A super-charged, early season strawberry that fruits in as little as 60 days from planting. Large numbers of flowering trusses are produced in succession offering an extended cropping period plus each truss carries only 4 to 5 flowers thus maintaining a larger fruit. Plants crop from May through June, and from the second year will offer a subsequent crop in September. Top rated in the Horticultural Development Council trials.',
+                'plant_id' => $strawberry->id,
+                'variety_id' => $strawberryVibrant->id,
+            ]);
+        }
     }
 }

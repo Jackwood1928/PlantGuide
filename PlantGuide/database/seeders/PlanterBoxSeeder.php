@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use App\Models\ContainerObject;
 use App\Models\Plant;
 use App\Models\ContainerObjectVariety;
+use App\Models\Variety;
 
 class PlanterBoxSeeder extends Seeder
 {
@@ -15,6 +16,7 @@ class PlanterBoxSeeder extends Seeder
         $spinach = Plant::findOrFail(11);
         $onion = Plant::findOrFail(5);
         $garlic = Plant::findOrFail(4);
+        $strawberry = Plant::findOrFail(13);
 
         // Create the planter boxes using ContainerObject
         for ($i = 0; $i < 18; $i++) {
@@ -23,7 +25,7 @@ class PlanterBoxSeeder extends Seeder
                 ContainerObject::create([
                     'type' => 'planter_box',
                     'name' => 'Box ' . ($i + 1),
-                    'location' => 'garden',
+                    'location' => 'Vegetable Patch',
                     'status' => 'Built',
                     'plant_id' => $spinach->id,
                 ]);
@@ -33,7 +35,7 @@ class PlanterBoxSeeder extends Seeder
                 ContainerObject::create([
                     'type' => 'planter_box',
                     'name' => 'Box ' . ($i + 1),
-                    'location' => 'garden',
+                    'location' => 'Vegetable Patch',
                     'status' => 'Built',
                     'plant_id' => $onion->id,
                 ]);
@@ -43,7 +45,7 @@ class PlanterBoxSeeder extends Seeder
                 ContainerObject::create([
                     'type' => 'planter_box',
                     'name' => 'Box ' . ($i + 1),
-                    'location' => 'garden',
+                    'location' => 'Vegetable Patch',
                     'status' => 'Built',
                     'plant_id' => $garlic->id,
                 ]);
@@ -52,16 +54,44 @@ class PlanterBoxSeeder extends Seeder
             ContainerObject::create([
                 'type' => 'planter_box',
                 'name' => 'Box ' . ($i + 1),
-                'location' => 'garden',
+                'location' => 'Vegetable Patch',
             ]);
         }
 
-        // Example: Add strawberry boxes
-        for ($i = 0; $i < 12; $i++) {
-            ContainerObject::create([
+        // Add 12 strawberry boxes, then assign varieties via pivot table
+        $strawberryBoxIds = [];
+        for ($i = 0; $i < 15; $i++) {
+            $box = ContainerObject::create([
                 'type' => 'strawberry_box',
                 'name' => 'Strawberry Box ' . ($i + 1),
-                'location' => 'patch',
+                'location' => 'Side of Greenhouse',
+                'plant_id' => $strawberry->id,
+                'status' => 'cardboard',
+            ]);
+            $strawberryBoxIds[] = $box->id;
+        }
+
+        // Assign varieties for strawberry boxes: 9 anablanca, 2 of each other variety
+        $anablancaStrawberry = Variety::findOrFail(12);
+        $vibrantStrawberry = Variety::findOrFail(13);
+        $allegroStrawberry = Variety::findOrFail(14); 
+        $flamencoStrawberry = Variety::findOrFail(15); 
+       
+
+        foreach ($strawberryBoxIds as $i => $boxId) {
+            if ($i < 9) {
+                $varietyId = $anablancaStrawberry->id;
+            } else if ($i < 11) {
+                $varietyId = $allegroStrawberry->id;
+            } else if ($i < 13) {
+                $varietyId = $flamencoStrawberry->id;
+            } else {
+                $varietyId = $vibrantStrawberry->id;
+            }
+
+            ContainerObjectVariety::create([
+                'container_object_id' => $boxId,
+                'variety_id' => $varietyId,
             ]);
         }
 

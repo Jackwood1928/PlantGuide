@@ -347,31 +347,38 @@ function App() {
                                     width: '100%',
                                     marginTop: '32px',
                                 }}>
-                                    {strawberryBoxes.map((box, i) => (
-                                        <div
-                                            key={box.id || i}
-                                            style={{
-                                                width: '80%',
-                                                height: `calc(100% / 12 - 4px)`,
-                                                minHeight: 0,
-                                                border: '1.5px solid #d32f2f',
-                                                background: '#fff',
-                                                borderRadius: '6px',
-                                                boxSizing: 'border-box',
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                                fontWeight: 'bold',
-                                                fontSize: '0.95rem',
-                                                color: '#d32f2f',
-                                                marginBottom: i < strawberryBoxes.length - 1 ? '2px' : '0',
-                                                cursor: 'pointer',
-                                            }}
-                                            onClick={() => handleContainerClick(box)}
-                                        >
-                                            {box.name}
-                                        </div>
-                                    ))}
+                                    {strawberryBoxes.map((box, i) => {
+                                        let varietyName = box.varieties && box.varieties.length > 0 ? box.varieties[0].name : 'No Variety';
+                                        return (
+                                            <div
+                                                key={box.id || i}
+                                                style={{
+                                                    width: '80%',
+                                                    height: `calc(100% / 12 - 4px)`,
+                                                    minHeight: 0,
+                                                    border: '1.5px solid #d32f2f',
+                                                    background: '#fff',
+                                                    borderRadius: '6px',
+                                                    boxSizing: 'border-box',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    fontWeight: 'bold',
+                                                    fontSize: '0.8rem',
+                                                    color: '#d32f2f',
+                                                    marginBottom: i < strawberryBoxes.length - 1 ? '2px' : '0',
+                                                    cursor: 'pointer',
+                                                    wordBreak: 'break-word',
+                                                    overflow: 'hidden',
+                                                    textOverflow: 'ellipsis',
+                                                    whiteSpace: 'nowrap',
+                                                }}
+                                                onClick={() => handleContainerClick(box)}
+                                            >
+                                                {varietyName}
+                                            </div>
+                                        );
+                                    })}
                                 </div>
                             </div>
                         </>
@@ -598,7 +605,12 @@ function App() {
                 >
                     <button style={{ position: 'absolute', top: 12, right: 12, fontSize: '1.2rem', background: 'none', border: 'none', cursor: 'pointer' }} onClick={closeModal}>&times;</button>
                     <h2 style={{ marginBottom: '12px' }}>{selectedContainer.name}</h2>
-                    <div><strong>Type:</strong> {selectedContainer.type}</div>
+                    <div><strong>Type:</strong> {
+                        selectedContainer.type === 'planter_box' ? 'Planter Box'
+                        : selectedContainer.type === 'strawberry_box' ? 'Strawberry Box'
+                        : selectedContainer.type === 'pot' ? 'Pot'
+                        : selectedContainer.type
+                    }</div>
                     <div><strong>Location:</strong> {selectedContainer.location}</div>
                     {selectedContainer.status && <div><strong>Status:</strong> {selectedContainer.status}</div>}
                     {selectedContainer.plant && <div><strong>Plant:</strong> {selectedContainer.plant.name}</div>}

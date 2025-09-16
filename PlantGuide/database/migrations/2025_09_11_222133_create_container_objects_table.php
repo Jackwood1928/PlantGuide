@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('status')->default('unbuilt');
             $table->string('location');
+            $table->unsignedBigInteger('variety_id')->nullable();
             $table->timestamps();
         });
     }
