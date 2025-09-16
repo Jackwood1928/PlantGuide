@@ -37,18 +37,18 @@ class PlantSeeder extends Seeder
         ]);
 
         $blueberry->varieties()->createMany([
-            ['name' => 'Duke (Vaccinium corymbosum)', 'url' => 'https://www.thompson-morgan.com/p/blueberry-duke/T71122TM'],
+            ['name' => 'Duke', 'url' => 'https://www.thompson-morgan.com/p/blueberry-duke/T71122TM'],
             ['name' => 'Pink Lemonade', 'url' => 'https://www.thompson-morgan.com/p/blueberry-pink-lemonade/KB2267TM'],
-            ['name' => 'Bluecrop (Vaccinium corymbosum)', 'url' => 'https://www.thompson-morgan.com/p/blueberry-bluecrop/t57997TM'],
+            ['name' => 'Bluecrop', 'url' => 'https://www.thompson-morgan.com/p/blueberry-bluecrop/t57997TM'],
 
         ]);
 
         $rubarb->varieties()->createMany([
-            ['name' => 'Rheum x hybridum', 'url' => 'https://www.thompson-morgan.com/p/rhubarb-glaskins-perpetual-seeds/831TM'],
+            ['name' => 'Glaskin\'s Perpetual', 'url' => 'https://www.thompson-morgan.com/p/rhubarb-glaskins-perpetual-seeds/831TM'],
         ]);
 
         $raspberry->varieties()->createMany([
-            ['name' => 'Little Sweet Sister (Rubus idaeus)', 'url' => 'https://www.thompson-morgan.com/p/raspberry-little-sweet-sister/wkb7551'],
+            ['name' => 'Little Sweet Sister', 'url' => 'https://www.thompson-morgan.com/p/raspberry-little-sweet-sister/wkb7551'],
             ['name' => 'Heritage', 'url' => 'https://www.thompson-morgan.com/p/raspberry-autumn-duo-autumn-fruiting/wkh1090TM'],
             ['name' => 'Golden Bliss', 'url' => 'https://www.thompson-morgan.com/p/raspberry-autumn-duo-autumn-fruiting/wkh1090TM'],
         ]);
@@ -58,7 +58,7 @@ class PlantSeeder extends Seeder
         ]);
 
         $strawberry->varieties()->createMany([
-            ['name' => 'Anablanca (Snow White)(Fragaria x ananassa)', 'url' => 'https://www.thompson-morgan.com/p/strawberry-anablanca-snow-white/KB2112TM'],
+            ['name' => 'Anablanca', 'url' => 'https://www.thompson-morgan.com/p/strawberry-anablanca-snow-white/KB2112TM'],
             ['name' => 'Allegro', 'url' => 'https://www.thompson-morgan.com/p/strawberry-british-grown-wimbledon-collection/wkh4010TM'],
             ['name' => 'Flamenco', 'url' => 'https://www.thompson-morgan.com/p/strawberry-british-grown-wimbledon-collection/wkh4010TM'],
             ['name' => 'Vibrant', 'url' => 'https://www.thompson-morgan.com/p/strawberry-british-grown-wimbledon-collection/wkh4010TM'],
@@ -73,7 +73,7 @@ class PlantSeeder extends Seeder
         ]);
 
         $carrot->varieties()->createMany([
-            ['name' => 'Early Nantes (Daucus carota)', 'url' => 'https://www.kingsseeds.com/OV107-CARROT-Daucus-carota-Early-Nantes-ORGANIC-SEED'],
+            ['name' => 'Early Nantes', 'url' => 'https://www.kingsseeds.com/OV107-CARROT-Daucus-carota-Early-Nantes-ORGANIC-SEED'],
         ]);
 
         $garlicVarieties = $garlic->varieties()->createMany([

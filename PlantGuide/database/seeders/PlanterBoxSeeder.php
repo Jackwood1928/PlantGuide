@@ -72,21 +72,21 @@ class PlanterBoxSeeder extends Seeder
         }
 
         // Assign varieties for strawberry boxes: 9 anablanca, 2 of each other variety
-        $anablancaStrawberry = Variety::findOrFail(12);
-        $vibrantStrawberry = Variety::findOrFail(13);
-        $allegroStrawberry = Variety::findOrFail(14); 
-        $flamencoStrawberry = Variety::findOrFail(15); 
-       
+
+        $anablancaStrawberry = Variety::where('name', 'Anablanca')->firstOrFail()->id;
+        $vibrantStrawberry = Variety::where('name', 'Vibrant')->firstOrFail()->id;
+        $allegroStrawberry = Variety::where('name', 'Allegro')->firstOrFail()->id;
+        $flamencoStrawberry = Variety::where('name', 'Flamenco')->firstOrFail()->id;
 
         foreach ($strawberryBoxIds as $i => $boxId) {
             if ($i < 9) {
-                $varietyId = $anablancaStrawberry->id;
+                $varietyId = $anablancaStrawberry;
             } else if ($i < 11) {
-                $varietyId = $allegroStrawberry->id;
+                $varietyId = $allegroStrawberry;
             } else if ($i < 13) {
-                $varietyId = $flamencoStrawberry->id;
+                $varietyId = $flamencoStrawberry;
             } else {
-                $varietyId = $vibrantStrawberry->id;
+                $varietyId = $vibrantStrawberry;
             }
 
             ContainerObjectVariety::create([
@@ -95,60 +95,62 @@ class PlanterBoxSeeder extends Seeder
             ]);
         }
 
+
         ContainerObjectVariety::create([
                 'container_object_id' => 4,
-                'variety_id' => 13
+                'variety_id' => Variety::where('name', 'Spinach Monterey F1')->firstOrFail()->id
         ]);
 
          ContainerObjectVariety::create([
-                'container_object_id' => 6,
-                'variety_id' =>  16,
-        ]);
-
-        ContainerObjectVariety::create([
-                'container_object_id' => 6,
-                'variety_id' =>  17,
-        ]);
-
-        ContainerObjectVariety::create([
-                'container_object_id' => 6,
-                'variety_id' =>  18,
-        ]);
-
-        ContainerObjectVariety::create([
-                'container_object_id' => 6,
-                'variety_id' =>  19,
-        ]);
-
-        ContainerObjectVariety::create([
-                'container_object_id' => 6,
-                'variety_id' =>  20,    
-        ]);
-
-        ContainerObjectVariety::create([
-                'container_object_id' => 6,
-                'variety_id' =>  21,    
-        ]);
-
-        ContainerObjectVariety::create([
-                'container_object_id' => 6,
-                'variety_id' =>  22,    
+                'container_object_id' => 5,
+                'variety_id' => Variety::where('name', 'Red Onion (Red Winter)')->firstOrFail()->id
         ]);
 
         ContainerObjectVariety::create([
                 'container_object_id' => 5,
-                'variety_id' =>  1,
+                'variety_id' => Variety::where('name', 'White Onion (Snowball)')->firstOrFail()->id
         ]);
 
         ContainerObjectVariety::create([
                 'container_object_id' => 5,
-                'variety_id' =>  2,
+                'variety_id' => Variety::where('name', 'Brown Onion (Golden Shakespeare)')->firstOrFail()->id
         ]);
 
         ContainerObjectVariety::create([
-                'container_object_id' => 5,
-                'variety_id' =>  3,
+                'container_object_id' => 6,
+                'variety_id' =>  Variety::where('name', 'Elephant Garlic')->firstOrFail()->id,
         ]);
+
+        ContainerObjectVariety::create([
+                'container_object_id' => 6,
+                'variety_id' =>  Variety::where('name', 'Carcassonne Wight (Hardneck)')->firstOrFail()->id,
+        ]);
+
+        ContainerObjectVariety::create([
+                'container_object_id' => 6,
+                'variety_id' =>  Variety::where('name', 'Caulk Wight (Hardneck)')->firstOrFail()->id,
+        ]);
+
+        ContainerObjectVariety::create([
+                'container_object_id' => 6,
+                'variety_id' =>  Variety::where('name', 'Kingsland Wight (Hardneck)')->firstOrFail()->id,
+        ]);
+
+        ContainerObjectVariety::create([
+                'container_object_id' => 6,
+                'variety_id' =>  Variety::where('name', 'Solent Wight (Softneck)')->firstOrFail()->id,
+        ]);
+
+        ContainerObjectVariety::create([
+                'container_object_id' => 6,
+                'variety_id' =>  Variety::where('name', 'Mersley Wight (Softneck)')->firstOrFail()->id,
+        ]);
+
+        ContainerObjectVariety::create([
+                'container_object_id' => 6,
+                'variety_id' =>  Variety::where('name', 'Rhapsody Wight (Softneck)')->firstOrFail()->id,
+        ]);
+
         // Example: Assign varieties to container objects (update IDs as needed)
         // ContainerObject::find(4)->varieties()->attach(13);
         // ContainerObject::find(6)->varieties()->attach([16,17,18,19,20,21,22]);
