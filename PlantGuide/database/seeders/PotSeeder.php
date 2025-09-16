@@ -13,6 +13,7 @@ class PotSeeder extends Seeder
                 'type' => 'pot',
                 'name' => 'Pot ' . $i,
                 'location' => 'unknown',
+                'status' => 'unfilled',
             ]);
         }
     }
