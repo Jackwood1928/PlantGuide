@@ -232,7 +232,7 @@ class PlantSeeder extends Seeder
             ]);
         }    
 
-        $strawberryAnablanca = $strawberry->varieties()->where('name', 'Anablanca (Snow White)(Fragaria x ananassa)')->first();
+        $strawberryAnablanca = $strawberry->varieties()->where('name', 'Anablanca')->first();
         if ($strawberryAnablanca) {  
             $strawberryAnablanca->notes()->create([
                 'note' => 'Grow this unusual variety and you’re in for a real treat. Also known as Pineberry, Strawberry ‘Snow White’ provides high yields of fruit with an aromatic flavour which has distinct pineapple aftertaste! The fruit can make quite a talking point with their backwards appearance - the same appetising heart shaped soft fruit but with white flesh and red seeds. A lovely strawberry to enjoy freshly picked as a snack or to add to desserts and cakes. Its bushy habit and neatly spreading stems makes this a good choice for growing in containers where the fruit will cascade over the edges, as well as out on the allotment. A fully hardy perennial, you can enjoy a great summer crop year after year. Height: 40cm (16”). Spread: 50cm (20”).',
