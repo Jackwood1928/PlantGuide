@@ -1,7 +1,7 @@
 Plant guide app
 
 Objective is to make a simple display of what veg and fruit gets planted where, 
-and the genreal layout of the veg area and which planting boxes are ready/built
+and the general layout of the veg area and which planting boxes are ready/built
 
 
 
