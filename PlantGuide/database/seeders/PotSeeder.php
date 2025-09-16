@@ -12,8 +12,8 @@ class PotSeeder extends Seeder
             ContainerObject::create([
                 'type' => 'pot',
                 'name' => 'Pot ' . $i,
-                'location' => 'unknown',
-                'status' => 'unfilled',
+                'location' => 'Unknown',
+                'status' => 'Unfilled',
             ]);
         }
     }
