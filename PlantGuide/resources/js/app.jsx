@@ -195,21 +195,83 @@ function App() {
                         </div>
                     </div>
                     {/* Strawberry Patch */}
-                    <div
-                        style={{
-                            border: '2px solid #d32f2f',
-                            background: '#ffcccb',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            fontWeight: 'bold',
-                            fontSize: '1.2rem',
-                            boxSizing: 'border-box',
-                            borderRadius: '8px',
-                        }}
-                    >
-                        Strawberry Patch
-                    </div>
+                     {/* Strawberry Patch with 12 vertical boxes */}
+                            <div
+                                style={{
+                                    gridRow: `span ${rows}`,
+                                    gridColumn: '3',
+                                    border: '2px solid #d32f2f',
+                                    background: '#ffcccb',
+                                    height: boxSize * rows + 32,
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    justifyContent: 'flex-start',
+                                    fontWeight: 'bold',
+                                    fontSize: '1.2rem',
+                                    boxSizing: 'border-box',
+                                    padding: '8px 0',
+                                    position: 'relative',
+                                }}
+                            >
+                                <span style={{
+                                    position: 'absolute',
+                                    top: '8px',
+                                    left: '50%',
+                                    transform: 'translateX(-50%)',
+                                    zIndex: 2,
+                                    fontWeight: 'bold',
+                                    fontSize: '1.1rem',
+                                    color: '#d32f2f',
+                                    textShadow: '0 1px 4px #fff',
+                                    padding: '2px 10px',
+                                    borderRadius: '6px',
+                                    whiteSpace: 'nowrap',
+                                    letterSpacing: '1px',
+                                }}>Strawberry Patch</span>
+                                <div style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    height: `calc(${boxSize * rows + 32}px - 40px)`,
+                                    width: '100%',
+                                    marginTop: '32px',
+                                }}>
+                                    {strawberryBoxes.map((box, i) => {
+                                        let varietyName = box.varieties && box.varieties.length > 0 ? box.varieties[0].name : 'No Variety';
+                                        return (
+                                            <div
+                                                key={box.id || i}
+                                                style={{
+                                                    width: '80%',
+                                                    height: `calc(100% / 12 - 4px)`,
+                                                    minHeight: 0,
+                                                    border: '1.5px solid #d32f2f',
+                                                    background: '#fff',
+                                                    borderRadius: '6px',
+                                                    boxSizing: 'border-box',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    fontWeight: 'bold',
+                                                    fontSize: '0.8rem',
+                                                    color: '#d32f2f',
+                                                    marginBottom: i < strawberryBoxes.length - 1 ? '2px' : '0',
+                                                    cursor: 'pointer',
+                                                    wordBreak: 'break-word',
+                                                    overflow: 'hidden',
+                                                    textOverflow: 'ellipsis',
+                                                    whiteSpace: 'nowrap',
+                                                }}
+                                                onClick={() => handleContainerClick(box)}
+                                            >
+                                                {varietyName}
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
                     {/* Removed empty cell for spacing */}
                 </div>
                 </div>
@@ -508,9 +570,37 @@ function App() {
                 </table>
             </div>
             <div id="text-notes">
-                <div className="responsive-notes" style={{ marginTop: '32px', textAlign: 'center', width: '100%' }}>
-                <br />
-                need to be acid soil for blueberries (ericaceous compost) (try and use rain water keeps soil ph)
+                <div
+                    className="responsive-notes"
+                    style={{
+                        margin: '40px auto',
+                        maxWidth: '420px',
+                        width: '100%',
+                        background: 'linear-gradient(90deg, #e3f2fd 0%, #c8e6c9 100%)',
+                        borderRadius: '16px',
+                        boxShadow: '0 2px 12px rgba(0,0,0,0.08)',
+                        padding: '24px 18px',
+                        textAlign: 'center',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        gap: '10px',
+                    }}
+                >
+                    <span style={{ fontSize: '2.2rem', color: '#1976d2', marginBottom: '8px' }}>
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ verticalAlign: 'middle' }}>
+                            <circle cx="16" cy="16" r="16" fill="#1976d2" />
+                            <ellipse cx="16" cy="16" rx="10" ry="12" fill="#90caf9" />
+                            <ellipse cx="16" cy="16" rx="7" ry="8" fill="#388e3c" />
+                        </svg>
+                    </span>
+                    <span style={{ fontWeight: 600, fontSize: '1.15rem', color: '#388e3c', marginBottom: '6px' }}>
+                        Blueberry Soil & Water Tip
+                    </span>
+                    <span style={{ fontSize: '1rem', color: '#333', lineHeight: 1.5 }}>
+                        Blueberries need <b>acid soil</b> (ericaceous compost).<br />
+                        Try to use <b>rain water</b> to keep soil pH low.
+                    </span>
                 </div>
                 <div id="plant-links" style={{
                     margin: '32px auto',
