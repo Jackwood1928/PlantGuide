@@ -13,10 +13,10 @@ class PlanterBoxSeeder extends Seeder
     public function run(): void
     {
         // Get the plants that are created and i already know which box they are going in
-        $spinach = Plant::findOrFail(11);
-        $onion = Plant::findOrFail(5);
-        $garlic = Plant::findOrFail(4);
-        $strawberry = Plant::findOrFail(13);
+        $spinach = Plant::where('name', 'Spinach')->firstOrFail();
+        $onion = Plant::where('name', 'Onion')->firstOrFail();
+        $garlic = Plant::where('name', 'Garlic')->firstOrFail();
+        $strawberry = Plant::where('name', 'Strawberry')->firstOrFail();
 
         // Create the planter boxes using ContainerObject
         for ($i = 0; $i < 18; $i++) {
